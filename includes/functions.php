@@ -81,10 +81,10 @@ function redireccionarUsuario($idPerfil){
                 header('Location: ./control/Admin/indexAdmin.php');
                 break;
             case "2":
-                header('Location: ./control/Internos/indexInternos.php');
+                header('Location: ./control/Profesores/indexProfesores.php');
                 break;
             case "3":
-                header('Location: ./control/Externos/indexExternos.php');
+                header('Location: ./control/Alumnos/indexAlumnos.php');
                 break;
         }
 }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.3
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 12-08-2016 a las 23:23:09
--- Versión del servidor: 5.6.24
--- Versión de PHP: 5.5.24
+-- Host: 127.0.0.1
+-- Generation Time: Aug 13, 2016 at 12:15 AM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,19 +14,19 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `primopiano`
+-- Database: `primopiano`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `digesto`
+-- Table structure for table `digesto`
 --
 
-CREATE TABLE IF NOT EXISTS `digesto` (
+CREATE TABLE `digesto` (
   `idDigesto` int(11) NOT NULL,
   `idTipoNorma` int(11) NOT NULL,
   `numero` int(11) NOT NULL,
@@ -38,10 +38,10 @@ CREATE TABLE IF NOT EXISTS `digesto` (
   `publicadaEn` varchar(25) NOT NULL,
   `fechaUltMod` date NOT NULL,
   `usuarioLog` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `digesto`
+-- Dumping data for table `digesto`
 --
 
 INSERT INTO `digesto` (`idDigesto`, `idTipoNorma`, `numero`, `tema`, `fechaPromulgada`, `palabraClave`, `norma`, `firma`, `publicadaEn`, `fechaUltMod`, `usuarioLog`) VALUES
@@ -52,10 +52,10 @@ INSERT INTO `digesto` (`idDigesto`, `idTipoNorma`, `numero`, `tema`, `fechaPromu
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `noticias`
+-- Table structure for table `noticias`
 --
 
-CREATE TABLE IF NOT EXISTS `noticias` (
+CREATE TABLE `noticias` (
   `idNoticia` int(11) NOT NULL,
   `noticia` text NOT NULL,
   `fechaAlta` date NOT NULL,
@@ -64,10 +64,10 @@ CREATE TABLE IF NOT EXISTS `noticias` (
   `tematica` varchar(50) NOT NULL,
   `titulo` varchar(150) NOT NULL,
   `comision` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `noticias`
+-- Dumping data for table `noticias`
 --
 
 INSERT INTO `noticias` (`idNoticia`, `noticia`, `fechaAlta`, `fechaUltMod`, `usuarioLog`, `tematica`, `titulo`, `comision`) VALUES
@@ -80,63 +80,58 @@ INSERT INTO `noticias` (`idNoticia`, `noticia`, `fechaAlta`, `fechaUltMod`, `usu
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `perfil`
+-- Table structure for table `perfil`
 --
 
-CREATE TABLE IF NOT EXISTS `perfil` (
+CREATE TABLE `perfil` (
   `idPerfil` int(10) NOT NULL,
   `nombrePerfil` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `perfil`
+-- Dumping data for table `perfil`
 --
 
 INSERT INTO `perfil` (`idPerfil`, `nombrePerfil`) VALUES
 (1, 'Administrador'),
-(2, 'Digesto'),
-(3, 'Noticias');
+(2, 'Profesores'),
+(3, 'Alumnos');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `privilegio`
+-- Table structure for table `privilegio`
 --
 
-CREATE TABLE IF NOT EXISTS `privilegio` (
+CREATE TABLE `privilegio` (
   `idPrivilegio` int(10) NOT NULL,
   `idPerfil` int(10) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `archivo` varchar(40) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `privilegio`
+-- Dumping data for table `privilegio`
 --
 
 INSERT INTO `privilegio` (`idPrivilegio`, `idPerfil`, `nombre`, `archivo`) VALUES
 (1, 1, 'Inicio', 'indexAdmin'),
-(2, 1, 'Ordenanzas', 'GestionDigesto'),
-(5, 1, 'Gacetilla', 'GestionNoticias'),
 (9, 1, 'Usuarios', 'GestionUsuarios'),
-(11, 1, 'Buscador', 'BuscadorOrdenanzas'),
-(12, 1, 'Banca', 'bancaDiputados'),
-(17, 1, 'Red Social', 'redesSociales'),
-(18, 1, 'Propuestas', 'propuestas');
+(19, 3, 'Inicio', 'indexAlumnos');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tiponorma`
+-- Table structure for table `tiponorma`
 --
 
-CREATE TABLE IF NOT EXISTS `tiponorma` (
+CREATE TABLE `tiponorma` (
   `idTipoNorma` int(11) NOT NULL,
   `tipo` varchar(40) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `tiponorma`
+-- Dumping data for table `tiponorma`
 --
 
 INSERT INTO `tiponorma` (`idTipoNorma`, `tipo`) VALUES
@@ -147,97 +142,98 @@ INSERT INTO `tiponorma` (`idTipoNorma`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Table structure for table `usuario`
 --
 
-CREATE TABLE IF NOT EXISTS `usuario` (
+CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL,
   `nombre` varchar(10) NOT NULL,
   `pass` char(32) NOT NULL,
   `idPerfil` int(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Dumping data for table `usuario`
 --
 
 INSERT INTO `usuario` (`idUsuario`, `nombre`, `pass`, `idPerfil`) VALUES
-(1, 'admin', '0192023a7bbd73250516f069df18b500', 1);
+(1, 'admin', '0192023a7bbd73250516f069df18b500', 1),
+(5, 'Giuliano', 'cf8640d1b066e5bcd8e9b03cc4803855', 3);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `digesto`
+-- Indexes for table `digesto`
 --
 ALTER TABLE `digesto`
   ADD PRIMARY KEY (`idDigesto`);
 
 --
--- Indices de la tabla `noticias`
+-- Indexes for table `noticias`
 --
 ALTER TABLE `noticias`
   ADD PRIMARY KEY (`idNoticia`);
 
 --
--- Indices de la tabla `perfil`
+-- Indexes for table `perfil`
 --
 ALTER TABLE `perfil`
   ADD PRIMARY KEY (`idPerfil`);
 
 --
--- Indices de la tabla `privilegio`
+-- Indexes for table `privilegio`
 --
 ALTER TABLE `privilegio`
   ADD PRIMARY KEY (`idPrivilegio`);
 
 --
--- Indices de la tabla `tiponorma`
+-- Indexes for table `tiponorma`
 --
 ALTER TABLE `tiponorma`
   ADD PRIMARY KEY (`idTipoNorma`);
 
 --
--- Indices de la tabla `usuario`
+-- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `digesto`
+-- AUTO_INCREMENT for table `digesto`
 --
 ALTER TABLE `digesto`
-  MODIFY `idDigesto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `idDigesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
--- AUTO_INCREMENT de la tabla `noticias`
+-- AUTO_INCREMENT for table `noticias`
 --
 ALTER TABLE `noticias`
-  MODIFY `idNoticia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `idNoticia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
--- AUTO_INCREMENT de la tabla `perfil`
+-- AUTO_INCREMENT for table `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `idPerfil` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `idPerfil` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `privilegio`
+-- AUTO_INCREMENT for table `privilegio`
 --
 ALTER TABLE `privilegio`
-  MODIFY `idPrivilegio` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+  MODIFY `idPrivilegio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
--- AUTO_INCREMENT de la tabla `tiponorma`
+-- AUTO_INCREMENT for table `tiponorma`
 --
 ALTER TABLE `tiponorma`
-  MODIFY `idTipoNorma` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `idTipoNorma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
