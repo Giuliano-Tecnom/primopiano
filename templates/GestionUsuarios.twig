@@ -1,0 +1,91 @@
+{% extends "base.twig" %}
+{% block body %}
+<script language="javascript"> 
+
+	function submitAddUser() {
+		document.addUser.submit();
+	}
+
+</script>
+
+<div class="col-sm-11 panel panel-default" style="margin-top: 30px; margin-left:50px;">
+                <ol class="breadcrumb">
+                    <li>Usuarios</li>
+                    <li class="active">Listado</li>
+                </ol>
+                <h1 class="page-header">Lista de Usuarios <a class="btn btn-success" style="float:right;" href="#" onclick="submitAddUser()">Nuevo Usuario</a></h1>
+                    <form action="GestionUsuarios.php" name="addUser" method="post">
+                        <input type="hidden" name="addUser" value="addUser">
+                    </form>
+                    
+                
+
+
+        
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                <tr>
+                    <td>
+                        <b>Nombre</b>
+                    </td>
+                    <td>
+                        <b>Opciones</b>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                                {% for user in users %}
+                <tr>
+                    <td>
+                                            {{ user.nombre }}
+                    </td>
+                    <td>
+                                            {% if user.idUsuario!=idUsuario%}<a class="btn btn-danger" onclick="return confirm('¿Está seguro de querer eliminar este usuario?');" href="GestionUsuarios.php?d={{ user.idUsuario }}">Eliminar</a> {% endif %} 
+                        <a class="btn btn-warning" href="GestionUsuarios.php?modU={{ user.idUsuario }}">Modificar</a>
+                    </td>
+                </tr>
+                                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<div class="col-sm-11" style="margin-top: 20px; margin-left:50px;">
+    <ol class="breadcrumb">
+        <li>Usuarios</li>
+        <li class="active">Gestion de Perfiles</li>
+    </ol>
+    <h1 class="page-header">Gestion de Perfiles
+                    
+    </h1>
+
+    
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <td>
+                            <b>Nombre</b>
+                        </td>
+                        <td>
+                            <b>Permisos</b>
+                        </td>
+                    </tr>
+                </thead>
+                                {% for profile in profiles %}
+                <tr>
+                    <td>
+                                            {{ profile.nombrePerfil }}
+                    </td>
+                    <td>
+                                            {% for privilege in privileges[profile.idPerfil] %}
+                                                | {{ privilege.nombre }}
+                                            {% endfor %}
+                    </td>
+                </tr>
+                                {% endfor %}
+
+            </table>
+       
+    </div>
+</div>
+{% endblock %}

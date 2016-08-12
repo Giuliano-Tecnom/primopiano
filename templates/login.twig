@@ -1,0 +1,77 @@
+{% extends "base.twig" %}
+{% block header %}
+{% endblock %}
+{% block pageBody %}
+<div class="row" style="margin-top: 5%; margin-left: 30%; margin-right: 30%">
+    {% if errorMsg|length > 0 %}
+            <div class="alert alert-danger" style="margin-left: 10px; margin-right: 10px;">  <a href="#" class="close" data-dismiss="alert">×</a><h4>Error: {{ errorMsg }} </h4> </div>
+                    
+        {% endif %}
+    
+    <div class="col-sm-12" style="margin-left:32%">
+                 <img src="images/arteaga2015.png" class="img-rounded" >
+    </div>   
+
+    
+            
+
+    {% block content %}
+
+    <form id="index" action='login.php' method='POST'>
+
+        
+
+        <div class="form-group">
+                <strong><label for="usario">Username</label></strong>
+                <input class="form-control" type="text" name="usuario" placeholder="Inserte aqu&iacute; su nombre de usuario." >
+        </div>
+
+        <div class="form-group">
+                <strong><label for="pass">Pasword</label></strong>
+                <input class="form-control" type="password" name="password" placeholder="Inserte aqu&iacute; su contraseña." >
+        </div>
+
+                
+        </br></br>
+            
+        <div class="form-group">
+            <div class="col-sm-4">
+                    
+            </div>
+            <div class="col-sm-3">
+                      <button id="Button1" type="submit" runat="server" class="btn btn-primary" >Ingresar <i class="fa fa-user"></i> </button>              
+            </div>
+
+            <div class="col-sm-5">
+                   
+                    
+            </div>
+
+        </div>
+
+    </form>
+            {% endblock %}
+
+</div>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+    $().ready(function() {
+
+
+        $("#index").validate({
+            rules: {
+                usuario: "required",               
+                password: "required"
+            },
+            messages: {
+                usuario: "<div class='alert alert-danger' style='height: 34px; opacity: 0.9; width: 284px; padding: 7px;'> Debe ingresar un Usuario.</h4> </div>",                
+                password: "<div class='alert alert-danger' style='height: 34px; opacity: 0.9; width: 284px; padding: 7px;'> Debe ingresar una contraseña.</h4> </div>"
+
+            }
+        });
+
+    });
+
+</script>
+{% endblock %}

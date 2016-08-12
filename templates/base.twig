@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        {% block head %}
+        <link rel="shortcut icon" href="/frlisandroolmos/images/masa.ico" />
+        <meta charset="UTF-8">
+        <link href="/frlisandroolmos/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+         <script src="/frlisandroolmos/js/jquery-1.9.1.js"></script> 
+         <script src="/frlisandroolmos/js/jquery-2.1.0.min.js"></script>  
+         <script src="/frlisandroolmos/js/bootstrap.min.js"></script> 
+
+		
+        <title>{% block title %}FR Lisandro Olmos - {{ title }}{% endblock %}</title>
+        {% endblock %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    <body>
+        {% block pageBody %}
+        <div id="siteWrapper" style="margin-top:100px;">
+            {% block header %}
+                {% include 'header.twig' %}
+            {% endblock %}
+            <div id="body">
+                <div id="msgWrapper">
+                     {% if successMsg|length>0  %}
+                    <div class="alert alert-success" style="margin-left: 10px; margin-right: 10px;">  <a href="#" class="close" data-dismiss="alert">×</a><h4>{{ successMsg }} </h4> </div>
+                    {% endif %}
+                    {% if errorMsg|length>0  %}
+                    <div class="alert alert-danger" style="margin-left: 10px; margin-right: 10px;">  <a href="#" class="close" data-dismiss="alert">×</a><h4>Error: {{ errorMsg }} </h4> </div>
+                    {% endif %}
+                </div>
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+        {% endblock %}
+
+        <script type="text/javascript" src="/frlisandroolmos/js/jquery.validate.min.js"></script>
+
+        
+        {% block javascript %}
+    {% endblock %}
+    </body>   
+    
+    
+</html>

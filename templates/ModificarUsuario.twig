@@ -1,0 +1,33 @@
+{% extends "AgregarUsuario.twig" %}
+{% block nuevo %}
+(Opcional) Nueva {{ idPerfil }}
+{% endblock%}
+{% block inputExtra %}
+<input type="hidden" name="idUsuario" value="{{ idUsuario }}" />
+{% endblock %}
+{% block textOk %}
+Guardar
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+    $().ready(function() {
+
+
+        $("#agregarUsuario").validate({
+            rules: {
+                passR: "required",
+                pass: "required",
+                nombreUsuario: "required"
+            },
+            messages: {
+                passR: "No deje este campo vacio",
+                pass: "No deje este campo vacio",
+                nombreUsuario: "Debe escribir un nombre de Usuario"
+
+            }
+        });
+
+    });
+
+</script>
+{% endblock %}

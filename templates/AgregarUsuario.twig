@@ -1,0 +1,102 @@
+{% extends "base.twig" %}
+{% block body %}
+                
+                    
+    <div class="col-sm-11 panel panel-default" style="margin-top: 20px; margin-left:50px;">
+                <ol class="breadcrumb">
+                        <li>Usuarios</li>
+                        <li class="active">{{ title }}</li>
+                </ol>
+
+                <h1 class="page-header">{{ title }} <a class="btn btn-info" style="float:right;" href="GestionUsuarios.php"> Volver </a></h1>
+
+                <form action="GestionUsuarios.php" name="addUser" method="post">
+                        <input type="hidden" name="addUser" value="addUser">
+                </form>
+                
+                
+                    <div class="form-group">
+                        <form id="agregarUsuario" action='GestionUsuarios.php' method='POST'>
+                            <div>
+                                <table class="table">
+                                     <tr>
+                                        <td style='width:30%;'>
+                                            Nombre de Usuario:
+                                        </td>
+                                        <td style='width:70%;'>
+                                            <input id="nombreUsuario" name="nombreUsuario" type="text" value='{{ nombreUsuario }}' /><b> *</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {% block nuevo %}{% endblock %}Clave:
+                                        </td>
+                                        <td>
+                                            <input id="pass" type="password" name="pass" /><b> *</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Repetir Clave:
+                                        </td>
+                                        <td>
+                                            <input id="passR" type="password" name="passR" /><b> *</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Perfil:
+                                        </td>
+                                        <td>
+                                            <select style="width:151px;" name='idPerfil'>
+                                                 {% for profile in profiles %}
+                                            <option value='{{ profile.idPerfil }}' 
+                                            {% if profile.idPerfil == idPerfilM %}
+                                                    selected
+                                            {% endif %}
+                                        
+                                        >{{ profile.nombrePerfil }}</option>
+                                                {% endfor %}
+                                            </select><b> *</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+											<p id="required-fields">
+												(*) Campos Obligatorios				
+											</p>
+                                            <input type='submit' value='{% block textOk %}Crear{% endblock %}' class='btn add'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% block inputExtra %}{% endblock %}
+                        </form>
+                    </div>
+                </div>
+    </div>            
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+    $().ready(function() {
+
+
+        $("#agregarUsuario").validate({
+            rules: {
+                passR: "required",
+                pass: "required",
+                nombreUsuario: "required"
+            },
+            messages: {
+                passR: "<div class='alert alert-danger' style='margin-top: -11px; height: 34px; opacity: 0.9; width: 284px; padding: 7px; margin-left:10px;'> No deje este campo vacio.</h4> </div>",
+                pass: "No deje este campo vacio",
+                nombreUsuario: "Debe escribir un nombre de Usuario"
+
+            }
+        });
+
+    });
+
+</script>
+{% endblock %}

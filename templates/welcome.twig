@@ -1,0 +1,121 @@
+{% extends "base.twig" %}
+
+{% block body %}
+<link href="/frlisandroolmos/css/circles.css" rel="stylesheet">
+    
+
+<div id="circles">
+                    <div class="col-lg-2 col-sm-6"></div>
+                    <div class="col-lg-2 col-sm-6"></div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="GestionDigesto.php">
+                                <div class="circle-tile-heading green">
+                                    <i class="fa fa-check-square fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content green">
+                                <div class="circle-tile-description">
+                                    Ordenanzas
+                                </div>
+                                <div class="circle-tile-number">
+                                    11
+                                </div>
+                                <a href="GestionDigesto.php" class="circle-tile-footer">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="propuestas.php">
+                                <div class="circle-tile-heading green">
+                                    <i class="fa fa-spinner fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content green">
+                                <div class="circle-tile-description">
+                                    Propuestas
+                                </div>
+                                <div class="circle-tile-number">
+                                    9 
+                                </div>
+                                <a href="propuestas.php" class="circle-tile-footer">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="redesSociales.php">
+                                <div class="circle-tile-heading green">
+                                    <i class="fa fa-bell-o fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content green">
+                                <div class="circle-tile-description ">
+                                  Tweets
+                                </div>
+                                <div class="circle-tile-number ">
+                                    24
+                                </div>
+                                <a href="redesSociales.php" class="circle-tile-footer">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6"></div>
+                   
+</div>
+<br>
+<br>
+<div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top:23%;">
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+        <div style="position: relative;isplay: block;margin-bottom: .75rem;background-color: #fff;border: 1px solid #e5e5e5;border-radius: .25rem; width: 35%;margin-left: 35%;">
+          <h4>Propuestas</h4>
+          <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#">Twitter</a>
+        </div>
+    </div>
+
+    <div class="item">
+        <div style="position: relative;isplay: block;margin-bottom: .75rem;background-color: #fff;border: 1px solid #e5e5e5;border-radius: .25rem; width: 35%;margin-left: 35%;">
+          <h4>Propuestas</h4>
+          <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#">Twitter</a>
+        </div>
+    </div>
+
+    <div class="item">
+      <div style="position: relative;isplay: block;margin-bottom: .75rem;background-color: #fff;border: 1px solid #e5e5e5;border-radius: .25rem; width: 35%;margin-left: 35%;">
+          <h4>Propuestas</h4>
+          <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#">Twitter</a>
+        </div>
+    </div>
+
+    <div class="item">
+      <div style="position: relative;isplay: block;margin-bottom: .75rem;background-color: #fff;border: 1px solid #e5e5e5;border-radius: .25rem; width: 35%;margin-left: 35%;">
+          <h4>Propuestas</h4>
+          <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#">Twitter</a>
+        </div>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" style="width: 55%;color: #130C0C;">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next" style="width: 55%;color: #130C0C;">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+
+                {% block Ayuda %}{% endblock %}
+{% endblock %}
