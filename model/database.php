@@ -32,7 +32,8 @@ class databasePDO {
     private function Connect() {
         try {
             // crea la conexion
-            $this->pdo = new PDO('mysql:host=localhost;dbname=s4000464_olmos', 'grupo_1', '');
+            //$this->pdo = new PDO('mysql:host=localhost;dbname=consejoDeliberante', 'grupo_1', '');
+            $this->pdo = new PDO('mysql:host=localhost;dbname=primopiano', 'root', '');
 
             // activo los errores por excepcion
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

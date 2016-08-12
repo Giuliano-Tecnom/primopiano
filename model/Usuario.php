@@ -128,7 +128,7 @@ class Usuario{
    
 
     private function cargarPrivilegios(){
-        require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/Privilegios.php';
+        require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Privilegios.php';
         $this->setPrivilegios(new Privilegios($this->idPerfil));
     }
     

@@ -1,12 +1,12 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/includes/functions.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/includes/functions.php';
 
 $twigParams = array();
 
 secure('GestionUsuarios');
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/frlisandroolmos/model/PerfilesManager.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/primopiano/model/PerfilesManager.php';
 $perfiles = new PerfilesManager();
 $twigParams["profiles"] = $perfiles->getPerfiles();
 
@@ -17,7 +17,7 @@ if (isset($_POST['addUser'])) {
     exit();
 }elseif(isset($_GET['modU'])){
     // Si recibo modU es modificar un usuario
-    require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/Usuario.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Usuario.php';
     $user = Usuario::fromId(intval($_GET['modU']));
     if(!$user){
         $twigParams["errorMsg"] = "El usuario no existe";
@@ -35,7 +35,7 @@ if (isset($_POST['addUser'])) {
         // Si completaron todos los campos
         if($_POST['pass']!=$_POST['passR']){
             // Si las claves no coinciden
-            require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/PerfilesManager.php';
+            require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/PerfilesManager.php';
             $perfiles = new PerfilesManager();
             $twigParams["profiles"] = $perfiles->getPerfiles();
             $twigParams["nombreUsuario"]= $_POST['nombreUsuario'];
@@ -44,7 +44,7 @@ if (isset($_POST['addUser'])) {
             init('AgregarUsuario.twig', $twigParams);
             exit();
         }
-        require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/Usuario.php';
+        require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Usuario.php';
         if(!Usuario::exists($_POST['nombreUsuario'])){
             if(Usuario::create($_POST['idPerfil'], $_POST['nombreUsuario'], $_POST['pass'])){
                 $twigParams["successMsg"] = "El usuario se ha creado correctamente";
@@ -62,7 +62,7 @@ if (isset($_POST['addUser'])) {
     // Si se edito un usuario y se envio solo el idusuario
     if((!empty($_POST['nombreUsuario']))&&(!empty($_POST['idPerfil']))&&(!empty($_POST['idUsuario']))){
         // Si completo los campos obligatorios
-        require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/Usuario.php';
+        require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Usuario.php';
         $user = Usuario::fromId(intval($_POST['idUsuario']));
         if((!empty($_POST['pass']))&&(!empty($_POST['passR']))){
             // Cambiar clave    
@@ -87,12 +87,12 @@ if (isset($_POST['addUser'])) {
         }
     }
 }
-require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/UsuariosManager.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/Privilegios.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/UsuariosManager.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Privilegios.php';
 
 // Si se quiere eliminar un usuario
 if(isset($_GET['d'])){
-    require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/Usuario.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Usuario.php';
     if(Usuario::delete(intval($_GET['d']))){
         $twigParams["successMsg"] = "El usuario se ha eliminado correctamente";
     }else{

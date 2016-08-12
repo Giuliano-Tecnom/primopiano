@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/includes/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/includes/functions.php';
 $twigParams = array();
 secure('indexAdmin');
 

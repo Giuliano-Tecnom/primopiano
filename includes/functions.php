@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/lib/Twig/Autoloader.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/lib/Twig/Autoloader.php';
 
 //require_once './lib/Twig/Autoloader.php';
     
@@ -9,7 +9,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/lib/Twig/Autoloader.php
 function init($template,$valores){
     
     Twig_Autoloader::register();
-    $loader = new Twig_Loader_Filesystem($_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/templates');
+    $loader = new Twig_Loader_Filesystem($_SERVER['DOCUMENT_ROOT'].'/primopiano/templates');
     $twig = new Twig_Environment($loader, array(
     ));
 
@@ -93,8 +93,8 @@ function secure($archivo,$login=false){
     if(isset($_SESSION['idUsuario'])&&$login){
         redireccionarUsuario($_SESSION['idPerfil']);
     }elseif(isset($_SESSION['idUsuario'])){
-        include_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/Usuario.php';
-        include_once $_SERVER['DOCUMENT_ROOT'].'/frlisandroolmos/model/Privilegios.php';
+        include_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Usuario.php';
+        include_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Privilegios.php';
         
         $user = Usuario::fromId($_SESSION['idUsuario']);
         $privileges = $user->getPrivilegios()->getArchivos();
