@@ -9,14 +9,24 @@ class Usuario{
     private $pass;
     private $idPerfil;
     private $privilegios;
+    private $nombreCompleto;
+    private $apellido;
+    private $email;
+    private $cantSemanal;
+    private $celular;
     
     
     // <editor-fold defaultstate="collapsed" desc="constructores">
-    function __construct($idUsuario,$nombre,$pass,$idPerfil) {
+    function __construct($idUsuario,$nombre,$pass,$idPerfil,$nombreCompleto, $apellido, $email, $cantSemanal, $celular) {
         $this->nombre=$nombre;
         $this->idPerfil=$idPerfil;
         $this->pass=$pass;
         $this->idUsuario=$idUsuario;
+        $this->nombreCompleto=$nombreCompleto;
+        $this->apellido=$apellido;
+        $this->email=$email;
+        $this->cantSemanal=$cantSemanal;
+        $this->celular=$celular;
         $this->cargarPrivilegios();
     }
 
@@ -39,11 +49,10 @@ class Usuario{
     public static function fromId($idUsuario){
         global $database;
         $database=new databasePDO();
-        $resultado= $database->row("SELECT idUsuario,nombre,CAST(MD5(pass) AS CHAR (500)) as pass,idPerfil FROM usuario WHERE idUsuario= :id",array("id"=>$idUsuario));
+        $resultado= $database->row("SELECT u.idUsuario ,nombre,CAST(MD5(u.pass) AS CHAR (500)) as pass,idPerfil, nombreCompleto, apellido, email,cantSemanal,celular FROM usuario as u INNER JOIN datosusuario as du on u.idUsuario=du.idUsuario WHERE u.idUsuario= :id",array("id"=>$idUsuario));
         if($resultado){
-            return new Usuario($resultado["idUsuario"], $resultado["nombre"], $resultado["pass"], $resultado["idPerfil"]);
-        }else{
-            return null;
+            return new Usuario($resultado["idUsuario"], $resultado["nombre"], $resultado["pass"], $resultado["idPerfil"],$resultado["nombreCompleto"],$resultado["apellido"], $resultado["email"], $resultado["cantSemanal"], $resultado["celular"]);
+            
         }
     }
     
@@ -71,6 +80,21 @@ class Usuario{
     public function getIdPerfil() {
         return $this->idPerfil;
     }
+    public function getNombreCompleto() {
+        return $this->nombreCompleto;
+    }
+    public function getApellido() {
+        return $this->apellido;
+    }
+    public function getEmail() {
+        return $this->email;
+    }
+    public function getCantidadSemanal() {
+        return $this->cantSemanal;
+    }
+    public function getCelular() {
+        return $this->celular;
+    }
 
     public function setNombre($nombre) {
         $this->nombre = $nombre;
@@ -94,6 +118,21 @@ class Usuario{
     public function setIdPerfil($idPerfil) {
         $this->idPerfil = $idPerfil;
     }
+      public function setNombreCompleto($nombreCompleto) {
+        $this->nombreCompleto = $nombreCompleto;
+    }
+      public function setApellido($apellido) {
+        $this->apellido = $apellido;
+    }
+      public function setEmail($email) {
+        $this->email = $email;
+    }
+      public function setCantidadSemanal($cantSemanal) {
+        $this->cantSemanal = $cantSemanal;
+    }
+      public function setCelular($celular) {
+        $this->celular = $celular;
+    }
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="update - create - delete">
@@ -106,11 +145,15 @@ class Usuario{
         return $resultado;
     }
     
-     public static function create($idPerfil,$nombre,$pass) {
+     public static function create($idPerfil,$nombre,$pass,$nombreCompleto, $apellido,$email,$cantSemanal,$celular) {
         global $database;
         $result = $database->row("SELECT idUsuario,nombre,CAST(MD5(pass) AS CHAR (500)) as pass,idPerfil FROM usuario WHERE nombre=:nom",array("nom"=>$nombre));
         if(!$result){
             $resultado = $database->execute("INSERT INTO usuario (nombre,pass,idPerfil) values (:nombre, MD5(\"".$pass."\"),:idPerfil)", array("nombre" => $nombre , "idPerfil"=> $idPerfil));
+            $id = $database->row("SELECT MAX(idUsuario) AS id FROM usuario");
+            $resultadoUsuario = $database->execute("INSERT INTO datosusuario (idUsuario, nombreCompleto,apellido,email, cantSemanal, celular) values (
+                :idUsuario,:nombreCompleto,:apellido, :email,:cantSemanal,:celular)", array("idUsuario"=>$id['id'],"nombreCompleto" => $nombreCompleto ,
+                 "apellido"=> $apellido, "email"=> $email,"cantSemanal"=> $cantSemanal, "celular"=> $celular));
             return $resultado;
         }else{
             return null;

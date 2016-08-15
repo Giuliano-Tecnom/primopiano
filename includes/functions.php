@@ -97,6 +97,7 @@ function secure($archivo,$login=false){
         include_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Privilegios.php';
         
         $user = Usuario::fromId($_SESSION['idUsuario']);
+        
         $privileges = $user->getPrivilegios()->getArchivos();
         if(!in_array($archivo, $privileges)){
             init('notalowed.twig', array(

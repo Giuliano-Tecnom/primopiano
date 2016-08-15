@@ -46,7 +46,7 @@ if (isset($_POST['addUser'])) {
         }
         require_once $_SERVER['DOCUMENT_ROOT'].'/primopiano/model/Usuario.php';
         if(!Usuario::exists($_POST['nombreUsuario'])){
-            if(Usuario::create($_POST['idPerfil'], $_POST['nombreUsuario'], $_POST['pass'])){
+            if(Usuario::create($_POST['idPerfil'], $_POST['nombreUsuario'], $_POST['pass'], $_POST['nombreCompleto'], $_POST['apellido'], $_POST['email'], $_POST['cantSemanal'], $_POST['celular '])){
                 $twigParams["successMsg"] = "El usuario se ha creado correctamente";
             }else{
                 $twigParams["errorMsg"] = "El usuario no se ha podido crear";
