@@ -1,0 +1,144 @@
+
+{% block header %}
+{% block stylesheets %}
+<!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="css/form-elements.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css" type="text/css"> 
+{% endblock %}
+
+{% endblock %}
+<body>
+<div class="row">
+    {% if errorMsg|length > 0 %}
+            <div class="alert alert-danger" style="margin-left: 10px; margin-right: 10px;">  <a href="#" class="close" data-dismiss="alert">×</a><h4>Error: {{ errorMsg }} </h4> </div>
+                    
+    {% endif %}
+        {% if successMsg|length > 0 %}
+            <div class="alert alert-success" style="margin-left: 10px; margin-right: 10px;">  <a href="#" class="close" data-dismiss="alert">×</a><h4> {{ successMsg }} </h4> </div>
+                    
+    {% endif %}
+
+    {% block content %}
+<div class="top-content" style="text-align:center">
+    <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1><strong>Primo Piano</strong></h1>
+                            <div class="description"></div>
+                        </div>
+                    </div>
+
+         <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3 style="color:#9ba0e2;">Registrarse</h3>
+                                    <p>Completar todos los datos para crear una nueva cuenta.</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <form id="agregarUsuario" action='registrarse.php' method='POST'>
+                            <div>
+                                <table class="table">
+                                     <tr>
+                                        <td style='width:30%; color:white;'>
+                                            <p>Usuario :</p>
+                                        </td>
+                                        <td style='width:70%;'>
+                                            <input id="nombreUsuario" name="nombreUsuario" type="text" required/><b> *</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style='width:30%; color:white;'>
+                                            <p> Clave: </p>
+                                        </td>
+                                        <td>
+                                            <input id="pass" type="password" name="pass" required/><b> *</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style='width:30%; color:white;'>
+                                            <p> Repetir Clave: </p>
+                                        </td>
+                                        <td>
+                                            <input id="passR" type="password" name="passR" required/><b> *</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style='width:30%; color:white;'>
+                                           <p> Nombre Completo: </p>
+                                        </td>
+                                        <td style='width:70%;'>
+                                            <input id="nombreCompleto" name="nombreCompleto" type="text" required/><b> *</b>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td style='width:30%; color:white;'>
+                                            <p> Apellido: </p>
+                                        </td>
+                                        <td style='width:70%;'>
+                                            <input id="apellido" name="apellido" type="text" required/><b> *</b>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td style='width:30%; color:white;'>
+                                            <p>Email: </p>
+                                        </td>
+                                        <td style='width:70%;'>
+                                            <input id="email" name="email" type="text" required/><b> *</b>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td style='width:30%; color:white;'>
+                                            Cantidad Semanal:
+                                        </td>
+                                        <td style='width:70%;'>
+                                            <input id="cantSemanal" name="cantSemanal" type="text" required/><b> *</b>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td style='width:30%; color:white;'>
+                                            Celular:
+                                        </td>
+                                        <td style='width:70%;'>
+                                            <input id="celular" name="celular" type="text" required/><b> *</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <p id="required-fields">
+                                                (*) Campos Obligatorios             
+                                            </p>
+                                            <input type='submit' value='Crear' class="btn btn-success" style='width: 65%;'>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                            </div>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+            
+        </div>
+            {% endblock %}
+
+</div>
+{% block javascripts %}
+<script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.backstretch.js"></script>
+        <script src="js/scripts.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+{% endblock %}
+</body>
