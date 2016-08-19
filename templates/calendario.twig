@@ -54,14 +54,14 @@
                 e.preventDefault();
                 var fecha = $(this).attr('rel');
                 var date= new Date(fecha);
-                var diasSemana = new Array("Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo");
+                var diasSemana = new Array("Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo");
                 var dia=diasSemana[date.getDay()];
                 $('#mask').fadeIn(1000).html("<div id='nuevo_evento' class='window' rel='"+fecha+"'>Eventos del "+formatDate(fecha)+"</h2><a href='#' class='close' rel='"+fecha+"'>&nbsp;</a><div id='respuesta'></div><div id='respuesta_form'></div></div>");
                 $.ajax({
                     type: "GET",
                     url: "ajax_calendario.php",
                     cache: false,
-                    data: { fecha:dia,accion:"listar_evento" }
+                    data: { fecha:dia,idUsuario:{{ idUsuario }},accion:"listar_evento" }
                 }).done(function( respuesta ) 
                 {
                     $("#respuesta_form").html(respuesta);
@@ -81,35 +81,38 @@
                 }, 500);
             });
         
-            //guardar evento
-            $(document).on("click",'.enviar',function (e) 
+            $(document).on("click",'#confirmar',function (e) 
             {
                 e.preventDefault();
-                if ($("#evento_titulo").valid()==true)
-                {
-                    $("#respuesta_form").html("<img src='images/loading.gif'>");
-                    var evento=$("#evento_titulo").val();
-                    var fecha=$("#evento_fecha").val();
+                //if ($("#evento_titulo").valid()==true)
+                //{
+                    $("#respuesta_form").html("<img src='../../images/loading.gif'>");
+                    //var evento=$("#evento_titulo").val();
+                    //var fecha=$("#evento_fecha").val();
+                    var id=$(this).attr("rel");
                     $.ajax({
                         type: "GET",
                         url: "ajax_calendario.php",
                         cache: false,
-                        data: { evento:evento,fecha:fecha,accion:"guardar_evento" }
+                        data: { idClase:id,idUsuario: {{ idUsuario}}, accion:"guardar_evento" }
                     }).done(function( respuesta2 ) 
                     {
                         $("#respuesta_form").html(respuesta2);
-                        $(".formeventos,.close").hide();
+                        //$('#mask').reload();
+                        //$(".formeventos,.close").hide();
                         setTimeout(function() 
                         { 
+                             $("#respuesta_form").fadeOut();
                             $('#mask').fadeOut('fast');
                             var fechacal=fecha.split("-");
                             generar_calendario(fechacal[1],fechacal[0]);
                         }, 3000);
+                        
                     });
-                }
+                //}
             });
                 
-            //eliminar evento
+            //desinscribirte
             $(document).on("click",'.eliminar_evento',function (e) 
             {
                 e.preventDefault();
@@ -120,11 +123,18 @@
                     type: "GET",
                     url: "ajax_calendario.php",
                     cache: false,
-                    data: { id:id,accion:"borrar_evento" }
+                    data: { id:id,idUsuario: {{ idUsuario}}, accion:"borrar_evento" }
                 }).done(function( respuesta2 ) 
                 {
                     $("#respuesta").html(respuesta2);
-                    current_p.parent("p").fadeOut();
+                    
+                    setTimeout(function() 
+                        { 
+                        $("#respuesta").fadeOut();
+                        $('#mask').fadeOut();
+                        //var fechacal=fecha.split("-");
+                        generar_calendario(fechacal[1],fechacal[0]);}, 2000);
+                    
                 });
             });
                 
@@ -135,7 +145,6 @@
                 var nueva_fecha=datos.split("-");
                 generar_calendario(nueva_fecha[1],nueva_fecha[0]);
             });
-
            
 
         });

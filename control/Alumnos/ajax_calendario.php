@@ -26,37 +26,54 @@ switch ($_GET["accion"])
 		$query=$db->query("select * from ".$tabla." where dia='".$_GET["fecha"]."' order by hora asc");
 		if ($fila=$query->fetch_array())
 		{
+			
+			do{
+			//$inscripcionesAlumno==$db->query("")
+			//cantidad de inscriptos por clase
 			$inscriptos=$db->query("select count(*) as cantidad from claseusuario where idClase='".$fila["idClase"]."'");
 			$result = $inscriptos->fetch_array();
-			do{
-				if ($result["cantidad"] >= $fila["cupo"]){			
-					echo "<p> Clase ".$fila["hora"]." hs- Entrenamiento Funcional<a href='#' class='eliminar_evento' rel='".$fila["idClase"]."' title='Inscribirte ".fecha($_GET["fecha"])."'><img src='images/delete.png'></a></p>";
-				
+			//Verifico si el usuario esta inscripto.
+			$esta_inscripto=$db->query("SELECT idUsuario as id from claseusuario where idClase='".$fila["idClase"]."' and idUsuario='".$_GET["idUsuario"]."'");
+			$booleano= $esta_inscripto->fetch_array();
+				if ($result["cantidad"] == $fila["cupo"]){
+					if ($booleano['id']==null){	
+				    echo "<p style='color:red'> Clase ".$fila["hora"]." hs- Entrenamiento Funcional-   Cupo lleno!</p>";
+				    }
+					else
+					{
+						echo "<p> Clase ".$fila["hora"]." hs- Entrenamiento Funcional<a href='#' class='eliminar_evento' rel='".$fila["idClase"]."' title='Desinscribirte ".fecha($_GET["fecha"])."'><img src='../../images/delete.png'></a></p>";
+					}
 				}
 				else{
-					
-					echo "<p> Clase ".$fila["hora"]." hs- Entrenamiento Funcional<a href='#' class='eliminar_evento' rel='".$fila["idClase"]."' title='Inscribirte ".fecha($_GET["fecha"])."'><img src='images/add.png'></a></p>";
-				
+                    if ($booleano['id']==null){					
+					echo "<div><p> Clase ".$fila["hora"]." hs- Entrenamiento Funcional<a href='#' id='confirmar' rel='".$fila["idClase"]."' title='Inscribirte ".fecha($_GET["fecha"])."'><img src='../../images/add.png'></a> (Inscriptos hasta el momento: ".$result["cantidad"].")</p></div>";				
+				    }
+					else{
+						echo "<p> Clase ".$fila["hora"]." hs- Entrenamiento Funcional<a href='#' class='eliminar_evento' rel='".$fila["idClase"]."' title='Desinscribirte ".fecha($_GET["fecha"])."'><img src='../../images/delete.png'></a></p>";
+
+					}
 				}
 			}
 			while($fila=$query->fetch_array());
 		}
 		break;
 	}
+
 	case "guardar_evento":
 	{
-		$query=$db->query("insert into ".$tabla." (fecha,evento) values ('".$_GET["fecha"]."','".strip_tags($_GET["evento"])."')");
-		if ($query) echo "<p class='ok'>Evento guardado correctamente.</p>";
+		$query=$db->query("insert into claseusuario (idClase,idUsuario) values ('".$_GET["idClase"]."','".$_GET["idUsuario"]."')");
+		if ($query) echo "<p class='ok'>Se ha inscripto correctamente.</p>";
 		else echo "<p class='error'>Se ha producido un error guardando el evento.</p>";
 		break;
 	}
 	case "borrar_evento":
 	{
-		$query=$db->query("delete from ".$tabla." where id='".$_GET["id"]."' limit 1");
-		if ($query) echo "<p class='ok'>Evento eliminado correctamente.</p>";
+		$query=$db->query("delete from claseusuario where idClase='".$_GET["id"]."' and idUsuario='".$_GET['idUsuario']."' limit 1");
+		if ($query) echo "<p class='ok'>Se ha desinscripto correctamente.</p>";
 		else echo "<p class='error'>Se ha producido un error eliminando el evento.</p>";
 		break;
 	}
+
 	case "generar_calendario":
 	{
 		$fecha_calendario=array();
