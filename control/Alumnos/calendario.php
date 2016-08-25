@@ -18,4 +18,5 @@ if (isset($_GET["anio"])) {
 	$twigParams["anio"]='';
 }
 $twigParams["idUsuario"]=$_SESSION['idUsuario'];
+$twigParams["cantSemanal"]=$_SESSION['cantSemanal'];
 init('calendario.twig', $twigParams);

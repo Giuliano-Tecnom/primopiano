@@ -181,7 +181,7 @@ switch ($_GET["accion"])
 						echo "</td>";
 						$dia+=1;
 					}
-					else echo "<td class='desactivada'>&nbsp;</td>";
+					else echo "<td style='color:#8000FF'>&nbsp;</td>";
 					if ($i==7 || $i==14 || $i==21 || $i==28 || $i==35 || $i==42) {echo "<tr>";$tr+=1;}
 				}
 			}

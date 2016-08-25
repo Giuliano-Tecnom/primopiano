@@ -55,6 +55,7 @@ function createSession($idUsuario,$usuario,$idPerfil){
 	$_SESSION['usuario'] = $usuario;
 	$_SESSION['idUsuario'] = $idUsuario;
 	$_SESSION['idPerfil'] = $idPerfil;
+    $_SESSION['cantSemanal'] = 1;
     $_SESSION['ip'] = get_real_ip();
     $_SESSION['id'] = session_id();
 
