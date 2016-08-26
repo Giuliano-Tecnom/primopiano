@@ -2,11 +2,13 @@
 
 {% block body %}
     <link type="text/css" rel="stylesheet" media="all" href="/primopiano/css/calendario.css">
+	<link type="text/css" rel="stylesheet" media="all" href="/primopiano/css/clndr.css">
+    <div style="background-image:url(/primopiano/images/descarga.jpg);">
     <div class="calendario_ajax">
         <div class="cal"></div><div id="mask"></div>
 
     </div>
-    
+</div>    
     {% block javascripts %}
 
         <script>
@@ -56,7 +58,7 @@
                 var date= new Date(fecha);
                 var diasSemana = new Array("Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo");
                 var dia=diasSemana[date.getDay()];
-                $('#mask').fadeIn(1000).html("<div id='nuevo_evento' class='window' rel='"+fecha+"'>Eventos del "+formatDate(fecha)+"</h2><a href='#' class='close' rel='"+fecha+"'>&nbsp;</a><div id='respuesta'></div><div id='respuesta_form'></div></div>");
+                $('#mask').fadeIn(1000).html("<div id='nuevo_evento' class='window' rel='"+fecha+"'><h2> Clases "+formatDate(fecha)+"</h2><a href='#' class='close' rel='"+fecha+"'>&nbsp;</a><div id='respuesta'></div><div id='respuesta_form'></div></div>");
                 $.ajax({
                     type: "GET",
                     url: "ajax_calendario.php",

@@ -26,22 +26,31 @@ switch ($_GET["accion"])
 	{
 		//HORA ACTUAL 
 		$fecha = new \DateTime('now', new \DateTimeZone('America/Argentina/Buenos_Aires'));	
+		$puede=true;
 		$fechaHora = date_format($fecha, 'H');	
 		$query=$db->query("select * from ".$tabla." where dia='".$_GET["fecha"]."' order by hora asc");
 		if ($fila=$query->fetch_array())
 		{
-			
+			//cantidad de veces que el usuario esta inscripto
+					$seInscribio=$db->query("select count(*) as inscripciones from claseusuario where idUsuario='".$_GET["idUsuario"]."'");
+					$resultado = $seInscribio->fetch_array();
+			if($_GET["cantSemanal"]==$resultado["inscripciones"])
+			{
+				//Esta a tiempo, hay cupo, no esta inscripto y todavia puede inscribirse en esa semana.
+				$puede=false;
+				echo "<h4 style='color:red'> Superaste cantidad semanal de inscripciones!</h4> (Proba desinscribiendote de alguna clase futura)";
+								 
+			}	
 			do{
 				if(!(intval($fechaHora)<($fila["hora"]-1)) && $nombreDiasSemana[idate("w")]==$fila["dia"])
 					{	
 						//Se termino horario de inscripcion.
+						
 						echo "<p style='color:red'> Clase ".$fila["hora"]." hs- Entrenamiento Funcional-   Termino horario de inscripcion</p>";
 					}
 			    else
 					{
-					//cantidad de veces que el usuario esta inscripto
-					$seInscribio=$db->query("select count(*) as inscripciones from claseusuario where idUsuario='".$_GET["idUsuario"]."'");
-					$resultado = $seInscribio->fetch_array();
+					
 					//cantidad de inscriptos por clase
 					$inscriptos=$db->query("select count(*) as cantidad from claseusuario where idClase='".$fila["idClase"]."'");
 					$result = $inscriptos->fetch_array();
@@ -61,14 +70,14 @@ switch ($_GET["accion"])
 					}
 					else{
 						if ($booleano['id']==null){
-						   if($_GET["cantSemanal"]>$resultado["inscripciones"])
+						   if($puede)
 							 {
 								 //Esta a tiempo, hay cupo, no esta inscripto y todavia puede inscribirse en esa semana.
 								 echo "<div><p> Clase ".$fila["hora"]." hs- Entrenamiento Funcional<a href='#' id='confirmar' rel='".$fila["idClase"]."' title='Inscribirte ".fecha($_GET["fecha"])."'><img src='../../images/add.png'></a> (Inscriptos hasta el momento: ".$result["cantidad"].")</p></div>";
 							 }		
 							else{
 								//Esta a tiempo, hay cupo, no esta inscripto pero ya supero sus inscripciones semanales.
-								echo "<p style='color:red'> Clase ".$fila["hora"]." hs- Entrenamiento Funcional-   Superaste inscripciones semanales</p>";
+								echo "<p> Clase ".$fila["hora"]." hs- Entrenamiento Funcional <img src='../../images/minus.png'></a> </p>";
 							}				
 						}
 						else{
@@ -150,10 +159,22 @@ switch ($_GET["accion"])
 		if ($tope%7!=0) $totalfilas=intval(($tope/7)+1);
 		else $totalfilas=intval(($tope/7));
 			
-		$mesanterior=date("Y-m-d",mktime(0,0,0,$fecha_calendario[1]-1,01,$fecha_calendario[0]));
+ 		$mesanterior=date("Y-m-d",mktime(0,0,0,$fecha_calendario[1]-1,01,$fecha_calendario[0]));
 		$messiguiente=date("Y-m-d",mktime(0,0,0,$fecha_calendario[1]+1,01,$fecha_calendario[0]));
 		/* empezamos a pintar la tabla */
-		echo "<div class='row'><h2><p>&laquo; <a href='#' rel='$mesanterior' class='anterior'>&#8592;</a></p>".$meses[intval($fecha_calendario[1])]." de ".$fecha_calendario[0]." <p><a href='#' class='siguiente' rel='$messiguiente'>&#8594;</a> &raquo;</p><abbr title='S&oacute;lo se pueden agregar eventos en d&iacute;as h&aacute;biles y en fechas futuras (o la fecha actual).'></abbr></h2></div>";
+		/*echo '<div class="cal1"><div class="clndr"><div class="clndr-controls">
+							<div class="clndr-control-button">
+								<p class="clndr-previous-button"><a href="#" rel="'.$mesanterior.'"></a></p>
+							</div>
+							<div class="month">'.$meses[intval($fecha_calendario[1])].' '.$fecha_calendario[0].'</div>
+							<div class="clndr-control-button rightalign">
+								<p class="clndr-next-button">next</p>
+							</div>
+						</div>
+						</div>
+						</div>';*/
+		//echo "<div class='row'><h2>&laquo; <a href='#' rel='$mesanterior' class='anterior'>&#8592;</a></h2><h2>".$meses[intval($fecha_calendario[1])]." de ".$fecha_calendario[0]." <p><a href='#' class='siguiente' rel='$messiguiente'>&#8594;</a> &raquo;</p><abbr title='S&oacute;lo se pueden agregar eventos en d&iacute;as h&aacute;biles y en fechas futuras (o la fecha actual).'></abbr></h2></div>";
+						echo "<div class='myheader'><h4>&laquo; <a href='#' rel='$mesanterior' class='anterior'>&#8592;</a>".$meses[intval($fecha_calendario[1])]." de ".$fecha_calendario[0]." <a href='#' class='siguiente' rel='$messiguiente'>&#8594;</a> &raquo;</h4></div>";
 		if (isset($mostrar)) echo $mostrar;
 			
 		echo "<table class='calendario' cellspacing='0' cellpadding='0'>";
@@ -220,7 +241,7 @@ switch ($_GET["accion"])
 						else echo "$dia";
 						
 						/* agregamos enlace a nuevo evento si la fecha no ha pasado */
-						if (date("Y-m-d")<=$fecha_completa && es_finde($fecha_completa)==false && puedo_inscribirme($fecha_completa)) echo "<a href='#' data-evento='#nuevo_evento' title='Agregar un Evento el ".fecha($fecha_completa)."' class='add agregar_evento' rel='".$fecha_completa."'>&nbsp;</a>";
+						if (date("Y-m-d")<=$fecha_completa && es_finde($fecha_completa)==false && puedo_inscribirme($fecha_completa)) echo "<a href='#' data-evento='#nuevo_evento' title='Agregar un Evento el ".fecha($fecha_completa)."'rel='".$fecha_completa."'>&nbsp;</a>";
 						
 						echo "</td>";
 						$dia+=1;
