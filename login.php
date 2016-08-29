@@ -11,7 +11,7 @@ if (!empty($_POST['usuario']) and !empty($_POST['password'])) {
 
     if ($User != null) {
 
-        createSession($User->getIdUsuario(),$User->getNombre(),$User->getIdPerfil());
+        createSession($User->getIdUsuario(),$User->getNombre(),$User->getIdPerfil(),$User->getCantidadSemanal());
 
         redireccionarUsuario($User->getIdPerfil());
     } else {

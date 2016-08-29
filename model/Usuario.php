@@ -34,10 +34,10 @@ class Usuario{
         global $database;
         if ((!empty($usuario)) && (!empty($pass))) {
 
-            $resultado = $database->row("SELECT idUsuario,nombre,CAST(MD5(pass) AS CHAR (500)) as pass,idPerfil FROM usuario WHERE nombre= :nombre and pass= MD5('".$pass."')", array("nombre" => $usuario));
+            $resultado = $database->row("SELECT u.idUsuario,u.nombre,CAST(MD5(u.pass) AS CHAR (500)) as pass,u.idPerfil,du.nombreCompleto,du.apellido,du.email,du.cantSemanal,du.celular FROM usuario as u inner join datosusuario as du on u.idUsuario=du.idUsuario WHERE u.nombre= :nombre and u.pass= MD5('".$pass."')", array("nombre" => $usuario));
 
             if ($resultado!= false) {
-                $user = new Usuario($resultado["idUsuario"], $resultado["nombre"], $resultado["pass"], $resultado["idPerfil"]);
+                $user = new Usuario($resultado["idUsuario"], $resultado["nombre"], $resultado["pass"], $resultado["idPerfil"],$resultado["nombreCompleto"],$resultado["apellido"],$resultado["email"],$resultado["cantSemanal"],$resultado["celular"]);
                 return $user;
             } else {
                 return null;

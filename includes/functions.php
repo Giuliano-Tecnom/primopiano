@@ -50,12 +50,12 @@ function get_real_ip()
 
 
 
-function createSession($idUsuario,$usuario,$idPerfil){
+function createSession($idUsuario,$usuario,$idPerfil,$cantSemanal){
 
 	$_SESSION['usuario'] = $usuario;
 	$_SESSION['idUsuario'] = $idUsuario;
 	$_SESSION['idPerfil'] = $idPerfil;
-    $_SESSION['cantSemanal'] = 1;
+    $_SESSION['cantSemanal'] = $cantSemanal;
     $_SESSION['ip'] = get_real_ip();
     $_SESSION['id'] = session_id();
 
