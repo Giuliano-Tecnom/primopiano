@@ -65,7 +65,7 @@
                     type: "GET",
                     url: "ajax_calendario.php",
                     cache: false,
-                    data: { fecha:dia,idUsuario:{{ idUsuario }},cantSemanal:1,accion:"listar_evento" }
+                    data: { fecha:dia,idUsuario:{{ idUsuario }},cantSemanal:{{ cantSemanal }},accion:"listar_evento" }
                 }).done(function( respuesta ) 
                 {
                     $("#respuesta_form").html(respuesta);
