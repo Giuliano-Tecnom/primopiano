@@ -138,10 +138,13 @@ class Usuario{
     // <editor-fold defaultstate="collapsed" desc="update - create - delete">
     public function updateUsuario() {
         global $database;
-        $resultado = $database->execute("UPDATE usuario SET nombre= :nombre"
-                . ",pass = MD5(\"".$this->pass."\")"
-                . ",idPerfil = :idPerfil WHERE idUsuario = :idUsuario",
-                array("nombre"=>  $this->nombre,"idPerfil"=> $this->idPerfil,"idUsuario"=>  $this->idUsuario));
+        $resultado = $database->execute("UPDATE datosusuario SET nombreCompleto= :nombreCompleto"
+                . ",apellido= :apellido"
+                . ",email= :email"
+                . ",cantSemanal= :cantSemanal"
+                . ",celular= :celular"
+                . " WHERE idUsuario = :idUsuario",
+                array("nombreCompleto"=>  $this->nombreCompleto,"apellido"=> $this->apellido,"email"=>  $this->email,"cantSemanal"=>  $this->cantSemanal,"celular"=>  $this->celular,"idUsuario"=>  $this->idUsuario));
         return $resultado;
     }
     

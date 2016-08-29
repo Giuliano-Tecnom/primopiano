@@ -19,7 +19,7 @@
                 <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="../../img/backgrounds/musculo.png" class="img-circle img-responsive"> </div>
                 
                 <div class=" col-md-9 col-lg-9 "> 
-                <form id="updatePerfil" action='updatePerfil.php' method='POST'>
+                <form id="updatePerfil" action='perfilAlumno.php' method='POST'>
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
@@ -57,7 +57,7 @@
                      
                     </tbody>
                   </table>
-                  
+                  <input type="hidden" name="idUsuario" value="{{ idUsuario }}">
                 </div>
               </div>
             </div>
@@ -76,31 +76,31 @@
     $().ready(function() {
 
 $("#updateApellido").on("click", function() {
-    var input = $('<input />', {'type': 'text', 'name': 'aname', 'value': $(".inputSwitchApellido span").html()});
+    var input = $('<input />', {'type': 'text', 'name': 'apellido', 'value': $(".inputSwitchApellido span").html()});
         $(".inputSwitchApellido span").parent().append(input);
         $(".inputSwitchApellido span").remove();
 });
 
 $("#updateNombre").on("click", function() {
-    var input = $('<input />', {'type': 'text', 'name': 'aname', 'value': $(".inputSwitchNombre span").html()});
+    var input = $('<input />', {'type': 'text', 'name': 'nombreCompleto', 'value': $(".inputSwitchNombre span").html()});
         $(".inputSwitchNombre span").parent().append(input);
         $(".inputSwitchNombre span").remove();
 });
 
 $("#updateEmail").on("click", function() {
-    var input = $('<input />', {'type': 'text', 'name': 'aname', 'value': $(".inputSwitchEmail span").html()});
+    var input = $('<input />', {'type': 'text', 'name': 'email', 'value': $(".inputSwitchEmail span").html()});
         $(".inputSwitchEmail span").parent().append(input);
         $(".inputSwitchEmail span").remove();
 });
 
 $("#updatecantSemanal").on("click", function() {
-    var input = $('<input />', {'type': 'text', 'name': 'aname', 'value': $(".inputSwitchcantSemanal span").html()});
+    var input = $('<input />', {'type': 'text', 'name': 'cantSemanal', 'value': $(".inputSwitchcantSemanal span").html()});
         $(".inputSwitchcantSemanal span").parent().append(input);
         $(".inputSwitchcantSemanal span").remove();
 });
 
 $("#updateCelular").on("click", function() {
-    var input = $('<input />', {'type': 'text', 'name': 'aname', 'value': $(".inputSwitchCelular span").html()});
+    var input = $('<input />', {'type': 'text', 'name': 'celular', 'value': $(".inputSwitchCelular span").html()});
         $(".inputSwitchCelular span").parent().append(input);
         $(".inputSwitchCelular span").remove();
 });
