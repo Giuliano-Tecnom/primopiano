@@ -95,9 +95,19 @@ switch ($_GET["accion"])
 
 	case "guardar_evento":
 	{
+		$fecha = new \DateTime('now', new \DateTimeZone('America/Argentina/Buenos_Aires'));	
+		$fechaHora = date_format($fecha, 'H');
+		$clase=$db->query("select * from clase where idClase='".$_GET["idClase"]."'");
+		$resultadoClase=$clase->fetch_array();
+		if(!(intval($fechaHora)<($resultadoClase["hora"]-1)) && $nombreDiasSemana[idate("w")]==$resultadoClase["dia"])
+		{
+			echo "<p class='error'>Se termino horario inscripcion.</p>";
+		}
+	    else{
 		$query=$db->query("insert into claseusuario (idClase,idUsuario) values ('".$_GET["idClase"]."','".$_GET["idUsuario"]."')");
 		if ($query) echo "<p class='ok'>Se ha inscripto correctamente.</p>";
 		else echo "<p class='error'>Se ha producido un error guardando el evento.</p>";
+		}
 		break;
 	}
 	case "borrar_evento":
