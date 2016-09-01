@@ -82,7 +82,7 @@ function redireccionarUsuario($idPerfil){
                 header('Location: ./control/Admin/indexAdmin.php');
                 break;
             case "2":
-                header('Location: ./control/Profesores/indexProfesores.php');
+                header('Location: ./control/Profesores/calendario.php');
                 break;
             case "3":
                 header('Location: ./control/Alumnos/indexAlumnos.php');
