@@ -22,6 +22,7 @@ if((isset ($_POST['nombreUsuario']))&&(!(isset ($_POST['idUsuario'])))){
         if(!Usuario::exists($_POST['nombreUsuario'])){
             if(Usuario::create(3, $_POST['nombreUsuario'], $_POST['pass'], $_POST['nombreCompleto'], $_POST['apellido'], $_POST['email'], $_POST['cantSemanal'], $_POST['celular'])){
                 $twigParams["successMsg"] = "El usuario se ha creado correctamente";
+                header('Location: ./login.php');
             }else{
                 $twigParams["errorMsg"] = "El usuario no se ha podido crear";
             }
