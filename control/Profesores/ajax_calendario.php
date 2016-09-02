@@ -31,13 +31,15 @@ switch ($_GET["accion"])
 			echo'  <div class="container" style="width:50%">
 					  <div class="panel-group" id="accordion" >';
 			do{
+				$cuantos=$db->query("select count(*) as cantidad  from claseusuario where idClase='".$fila["idClase"]."'");
+				$cuantosResult=$cuantos->fetch_array();
 				//quienes estan inscriptos por clase
 					$inscriptos=$db->query("select nombreCompleto, apellido  from claseusuario inner join datosusuario on claseusuario.idUsuario= datosusuario.idUsuario where idClase='".$fila["idClase"]."'");
 					$result=$inscriptos->fetch_array();
 					echo'    <div class="panel panel-default">
 								  <div class="panel-heading" >
 									<h4 class="panel-title">
-									  <a data-toggle="collapse" data-parent="#accordion" href="#collapse'.$fila["idClase"].'">Clase Funcional '.$fila["hora"].' Hs. Inscriptos al momento: </a>
+									  <a data-toggle="collapse" data-parent="#accordion" href="#collapse'.$fila["idClase"].'">Clase Funcional '.$fila["hora"].' Hs. Inscriptos al momento: '.$cuantosResult["cantidad"]. '</a>
 									</h4>
 								  </div>
 								  <div id="collapse'.$fila["idClase"].'" class="panel-collapse collapse">

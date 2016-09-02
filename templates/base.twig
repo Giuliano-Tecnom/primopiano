@@ -17,13 +17,13 @@
         {% endblock %}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
-    <body>
+    <body style='background-image: url(/primopiano/images/primopiano.jpg);width: 100%;height: auto;'>
         {% block pageBody %}
         <div id="siteWrapper" style="margin-top:100px;">
             {% block header %}
                 {% include 'header.twig' %}
             {% endblock %}
-            <div id="body">
+            <div id="body" >
                 <div id="msgWrapper">
                      {% if successMsg|length>0  %}
                     <div class="alert alert-success" style="margin-left: 10px; margin-right: 10px;">  <a href="#" class="close" data-dismiss="alert">×</a><h4>{{ successMsg }} </h4> </div>
