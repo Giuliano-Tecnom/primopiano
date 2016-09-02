@@ -45,7 +45,6 @@ switch ($_GET["accion"])
 			do{
 				if(!(intval($fechaHora)<($fila["hora"]-1)) && $nombreDiasSemana[$fechaDia]==$fila["dia"])
 					{	
-						print_r($fila["dia"]);
 						//Se termino horario de inscripcion.
 						
 						echo "<p style='color:red'> Clase ".$fila["hora"]." hs- Entrenamiento Funcional-   Termino horario de inscripcion</p>";
