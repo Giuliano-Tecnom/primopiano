@@ -1,8 +1,33 @@
 {% extends "base.twig" %}
 
 {% block body %}
+	<div class="container">
+  		<div class="jumbotron">
+    	<h1>Primo Piano</h1> 
+    	<p>Alumnos recuerden seleccionar las clases que desean asistir, para una mejor organizaci&oacute;n!</p> 
+    	<p> <i class="fa fa-clock-o" aria-hidden="true"></i> 8:00 - 10:00 hs | 18:00 - 22:00 hs</p>
+    	<p> <i class="fa fa-home" aria-hidden="true"></i> 40 esquina 14, La Plata.</p>
+    	<p> <i class="fa fa-phone" aria-hidden="true"></i> 2214196598 | 2214557041</p>
+  	</div>
 
+	</div>
 
+	<script src="/primopiano/js/circle-progress.js"></script>
 
-                {% block Ayuda %}{% endblock %}
+	<div id="circle" style="margin-left:45%;"> 
+		<strong style="position: absolute;margin-top: 4%;left: 0;width: 100%;text-align: center;line-height: 40px;font-size: 30px;"> {{ cantSemanal }}</strong>
+	</div>
+	
+	<script>	
+  	$('#circle').circleProgress({
+    	value: 0.75,
+    	size: 150,
+    	fill: {
+      	gradient: ["lightblue","blue"]
+    	}
+  	});
+  	
+	</script>
+
+{% block Ayuda %}{% endblock %}
 {% endblock %}
