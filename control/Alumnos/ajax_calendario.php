@@ -28,6 +28,7 @@ switch ($_GET["accion"])
 		$fecha = new \DateTime('now', new \DateTimeZone('America/Argentina/Buenos_Aires'));	
 		$puede=true;
 		$fechaHora = date_format($fecha, 'H');	
+		$fechaDia=date_format($fecha, 'w');
 		$query=$db->query("select * from ".$tabla." where dia='".$_GET["fecha"]."' order by hora asc");
 		if ($fila=$query->fetch_array())
 		{
@@ -42,8 +43,9 @@ switch ($_GET["accion"])
 								 
 			}	
 			do{
-				if(!(intval($fechaHora)<($fila["hora"]-1)) && $nombreDiasSemana[idate("w")]==$fila["dia"])
+				if(!(intval($fechaHora)<($fila["hora"]-1)) && $nombreDiasSemana[$fechaDia]==$fila["dia"])
 					{	
+						print_r($fila["dia"]);
 						//Se termino horario de inscripcion.
 						
 						echo "<p style='color:red'> Clase ".$fila["hora"]." hs- Entrenamiento Funcional-   Termino horario de inscripcion</p>";
